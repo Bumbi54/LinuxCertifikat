@@ -1,0 +1,67 @@
+Show first 10 lines of file:
+  #head
+
+Count number of words, lines and characters in text file:
+  #wc
+
+Filtering out fields:
+  Option "cut -d DELIMITER"
+    Filter content by DELIMITER.
+  Option "cut -f 1"
+    Show only first field.
+
+Sort:
+  Sort by third column with ":" as field separator:
+    #sort -k3 -t :
+  Sort by numeric value:
+    #sort -n
+  Reverse sort:
+    #sort -r
+
+Searching:
+  Text must be at beginning of the line:
+    "^TEXT"
+  Text must be at end of the line:
+    "TEXT$"
+  Forward search:
+    "/STRING"
+  Backward search:
+    "?STRING"
+  Repeat search:
+    "n"
+  Go to last line:
+    "G"
+  Multiple occurrence of letter:
+    \{2\}  - Match exactly 2 of the previous character.
+    \{1,3\}  - Match a minimum of 1 and a maximum of 3 of the previous character.
+
+Grep:
+  Exclude lines that contain string: "-v"
+  Case insensitive: "-i"
+  Recursive search: "-r"
+  Search for lines matching more then one expression: "-e".
+  Show number of lines after result: "-A number".
+  Show number of lines before result: "-B number"
+  "-l" give the file name of matching files.
+  "-n" line number.
+
+List last lines in a file:
+  #tail -n 5 FILE
+
+Awk (awk -F : '/user { print $4 }' /etc/passwd):
+  Specify delimiter: "-f :"
+  Chose forth column: "'{ print $4 }'".
+  Lines that have text "/user": "'/user { print $4 }'".
+
+Sed:
+  Search and replace:
+    #sed -i s/old-text/new-text/g ~/myfile
+    Option "-i" writes changes directly to file.
+
+  Delete lines:
+    #sed -i -e ‘2d;20,25d’ ~/myfile
+      Delete lines 2 and 20 through 25.
+
+  Show lines:
+    #sed -n 5p /etc/passwd
+    This command searches the /etc/passwd file for the text user and will print the fourth field of any matching line.

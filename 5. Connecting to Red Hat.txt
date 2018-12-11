@@ -1,0 +1,42 @@
+Monitor security events real time:
+  #tail -f /var/log/secure
+
+Check all user that are logged in:
+  #w
+  #who
+
+System reboot and shutdown:
+  #systemctl reboot
+  #reboot
+  #systemctl halt
+  #halt
+  #systemctl poweroff
+  #poweroff
+  Force machine reset:
+    #echo b > /proc/sysrq-trigger
+
+Show status of service:
+  #systemctl status sshd
+
+After first ssh connection fingerprint is saved in: "~/.ssh/known_hosts"
+
+Using Graphical Applications over ssh:
+  Use option "-X":
+    #ssh -X root@IP
+  System wide configuration. In file "/etc/ssh/ssh_config" set "ForwardX11 yes".
+    After this X forwarding is used by default.
+
+Transfer files between servers:
+  Use "scp".
+  To copy entire subdirectory use option "-r".
+
+Configuring Key-Based Authentication for SSH:
+  Use of private and public keys:
+    To create pair:
+      #ssh-keygen
+    Copy public key to target server:
+      #ssh-copy-id SERVER
+      It is written in "~/.ssh/authorized_keys".
+
+Details about ssh connection:
+  Option "-v".

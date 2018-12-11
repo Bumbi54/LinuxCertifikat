@@ -1,0 +1,59 @@
+Alias:
+  List aliases:
+    #alias
+  Add alias:
+    #ll=’ls -l --color=auto’
+  They are executed before anything else.
+  If "\" is put before command, alias won't be used.
+
+To find information about commands:
+    #type command
+    #which command
+      To find from where command is called.
+
+  Redirectors:
+    > - redirect STDOUT into file for example (overwrite)
+    >> - redirect STDOUT into file for example (append)
+    2>$1 - Redirects STDERR to the same destination as STDOUT
+    < - Redirects STDIN
+
+History:
+  #history
+  Search thought history:
+    CTRL + R
+    #!command or number
+  Wipe history in memory:
+    #history -c
+  Wipe history on disk:
+    #history -c
+    #history -w
+
+Vim replace all:
+  :%s/old/new/g
+
+List current environment:
+  #env
+
+Print environment variable:
+  #echo $PATH
+  $LANG
+    Data about languages.
+  Set new environment variable:
+    #LANG=fr_FR.UTF-8
+
+Environment:
+  /etc/profile: This is the generic file that is processed by all users upon login.
+  /etc/bashrc: This file is processed when subshells are started.
+  ~/.bash_profile: In this file, user-specific login shell variables can be defined.
+  ~/.bashrc: In this user-specific file, subshell variables can be defined.
+
+Login message:
+  File: "/etc/motd" - after login
+        "/etc/issue" - before login
+
+Search man pages:
+  #apropos
+  #man -k
+
+Update man pages(as root):
+  #mandb

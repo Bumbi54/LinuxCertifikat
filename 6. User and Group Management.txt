@@ -1,0 +1,109 @@
+Default settings for creating new users:
+  #/etc/default/useradd
+  #/etc/login.defs
+
+Manage of password properties:
+  #chage
+  #cahge -l USER_NAME
+  #passwd
+
+Information of user:
+  #id USER_NAME
+
+Give user administrator privileges:
+  Add user to "wheel" group:
+    #usermod -aG wheel user
+  Type "visudo" and make sure the line %wheel ALL=(ALL) ALL is included
+
+Administrator privileges on graphical applications:
+  Use "PolicyKit"
+
+Check currently logged in user:
+  #whoami
+
+Create user:
+  #useradd lisa
+  Create user and assign it group:
+    #useradd -aG wheel lisa
+  #useradd -m -u 1201 -G sales,ops linda
+    Create a user linda who is a member of the groups sales and ops with UID 1201 and add a home directory to the user account as well.
+
+Set password for user:
+  #passwd lisa
+
+Delete user:
+  #userdel
+  Remove entire user environment:
+    #userdel -r
+
+Skeleton for user create home directory:
+  #/etc/skel
+    This files are copied to user home directory
+
+Manage of user:
+  #usermod
+
+File "/etc/login.defs":
+  ■ MOTD_FILE: Defines the file that is used as “message of the day” file. In
+  this file, you can include messages to be displayed after the user has successfully
+  logged in to the server.
+  ■ ENV_PATH: Defines the $PATH variable, a list of directories that should be
+  searched for executable files after logging in.
+  ■ PASS_MAX_DAYS, PASS_MIN_DAYS, and PASS_WARN_AGE: Define
+  the default password expiration properties when creating new users.
+  ■ UID_MIN: The first UID to use when creating new users.
+  ■ CREATE_HOME: Indicates whether or not to create a home directory for
+  new users.
+  ■ USERGROUPS_ENAB: Set to yes to create a private group for all new
+  users. That means that a new user has a group with the same name as the user
+  as its default
+
+
+In ".bashrc" set default text editor:
+  "export EDITOR=/usr/bin/vim"
+
+Groups:
+  Only one primary group per user:
+    Defined in "/etc/passwd"
+  Groups are stored at:
+   "/etc/group"
+  Create group:
+    #groupadd
+      Option -g to specify group ID.
+  Manage groups:
+    #groupmod
+  Append user to new group without remove it from other groups:
+    Option "-a".
+    #usermod -aG GROUP_NAME USER_NAME
+  List members of group:
+    #groupmems -g GROUP_NAME -l
+
+Logging In Through an External Authentication Service (LDAP):
+  Three tools for setting up LDAP Authentication:
+    authconfig - command line
+    authconfig-tui - menu driven (nslcd)
+    authconfig-gtk - GUI (sssd)
+
+    Configuration file of "nslcd":
+      /etc/nslcd.conf
+
+    After configuration check status:
+      #systemctl status nslcd
+
+    Configuration file of "sssd":
+      /etc/sss/sssd.conf
+
+    When you use authconfig-tui, the variable FORCELEGACY=yes is set in /etc/sysconfig/authconfig. This makes that nslcd is used instead of sssd.
+
+    Step before using any command:
+      yum groupinstall -y “Directory Client”
+      scp ipa.example.com:/root/cacert.p12 /etc/openldap/cacerts
+
+    For authconfig-tui:
+      Make sure the base DN is set to dc=example,dc=com (LDAP domain "ipa.example.com")
+      Open the file /etc/nslcd.conf and make sure that it contains the line tls_reqcert never.
+      Use systemctl restart nslcd to restart the nslcd service.
+
+Host file:
+  Set new name resolution:
+    192.168.122.200 ipa.example.com

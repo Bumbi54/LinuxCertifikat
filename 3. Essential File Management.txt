@@ -1,0 +1,94 @@
+List mounted devices:
+  #df -h
+    Shows mounted devices and space on them.
+  #df -T
+    Shows file system type as well (to differentiate real file system opposed to kerenl interface)
+    Use "-m" to show size in mebibytes.
+  #mount
+  $findmnt
+    Shows relations between mounts.
+  The real devices in the output start with /dev (which refers to the directory that is used to store device files).
+
+Listing files in current directory:
+  #ls
+    Options:
+      -a shows hidden files (git files for example)
+      -l gives long listing (every file in new row with sizes permissions and timestamps)
+      -t sort on modification time newest files first
+      -r revert sorting order
+      -d Match a directory (use with wildcards)
+      -R Shows the contents of the current directory, in addition to all of its subdirectories; that is, it Recursively descends all subdirectories.
+
+Copying files:
+  Copy hidden and regular files to current directory:
+    #cp -a /home/$USER/. .
+
+  Copy entire folder into current directory and save it in folder with the same name:
+    #cp -a /home/$USER .
+
+  Copy entire directory with all of its content:
+    #cp -R
+
+  To copy current permissions of files use:
+    #cp -a
+
+Symbolic links:
+  Link to name of file.
+  To create hard links, you must be the owner of the item that you want to link to.
+  Create symbolic link:
+    #ln -s SCOURCE DESTRINATION
+
+Create file:
+  #touch FILE_NAME
+
+Hidden files starts with a dot "."
+
+Hard links:
+  Hard links must exist all on the same device.
+  You cannot create hard links to directories.
+  The number of aliases the original file has. When the last name is removed, the contents are also removed.
+  No difference exists between the first hard link and the second hard link.
+  Link to "inode".
+  Create link:
+    #ln /etc/hosts .
+    #ln SCOURCE DESTINATION
+
+Archives:
+  Using tar:
+    Create tar archives:
+      #tar -cf NAME.tar /files
+      To see what is happening use "-v".
+      Read permission is needed to put files to tar.
+    Add file to existing archives:
+      #tar -rvf NAME.tar files
+        Option "-r".
+    Update (overwrite) existing archives:
+      $tar -uvf NAME.tar files
+        Option "-u".
+    List content of tar archives:
+      #tar -tvf NAME.tar
+        Option "-t".
+    Extract tar archives:
+      #tar -xvf NAME.tar
+        Option "-c".
+        Extracted to current directory.
+      #tar -xvf NAME.tar -C DESTINATION
+        Option "-C".
+        Extract to DESTINATION directory.
+      #tar -xvf NAME.tar FILE_NAME
+        Extract only FILE_NAME from tar archive to current directory.
+    Compression:
+     Use option "-z" (gzip) or "-j" (bzip2) while creating archive.
+     No option for extracting.
+
+Compress files:
+  #gzip home.tar
+    New file is created: "home.tar.gz"
+  Alternative: "bzip2".
+
+Decompress files:
+  #gunzip
+  #bunzip2
+
+Find out file type:
+    #file NAME_OF_FILE
