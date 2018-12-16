@@ -1,0 +1,48 @@
+Kernel threads have "[]" in lsit of "ps aux".
+
+Check kernel events/messages:
+  #dmesg
+  #journalctl --dmesg
+  #journalctl -k
+  Files in "/proc".
+  #uname
+    "-r" for kernel version or "hostnamectl status"
+
+"systemd-udevd" loads drivers.
+  Default rules in "/usr/lib/udev/rules.d."
+  Custom rules "/etc/udev/rules.d".
+
+"udevadm monitor"
+  This is all events that are processed while activating new hardware devices.
+
+Manual management of kernel modules:
+  #lsmod
+    Lists currently loaded kernel modules.
+  #modinfo
+    Displays information about kernel modules.
+  #modprobe
+    Loads kernel modules, including all of their dependencies.
+  #modprobe - r
+    Unloads kernel modules, considering kernel module dependencies
+    Show module information:
+      #modinfo e1000
+      Show parameters that it can use.
+  #modprobe cdrom debug=1 .
+    Load module with parameter.
+  Load module with parameter every time it is loaded:
+    Create file: "/etc/modprobe.d/cdrom"
+      Put in it "options cdrom debug=1".
+
+
+Show all hardware device detected:
+  #lspci
+
+List all kernel modules that are used for the PCI devices that were detected:
+  #lspci -k
+
+  Alternative:
+    Add files in "/etc/modules-load.d".
+
+Upgrade kernel:
+  #yum install kernel
+  #yum upgrade kernel

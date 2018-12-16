@@ -1,0 +1,52 @@
+Check cron service status:
+  #systemctl status crond -l
+
+Crond examples:
+  #man 5 crontab
+
+To create crond job for a specific user:
+  #crontab -e -u username
+  In general user is not specified.
+
+Put files in "/etc/cron.d" directory:
+  Example of file:
+    #10 3 1 * * unbound /usr/sbin/unbound-anchor -a /var/lib/unbound/root. anchor -c /etc/unbound/icannbundle.pem
+      First part "10 3 1 * *":
+        On 3:10 every first in moth.
+      Second part user:
+        "unbound"
+      Third part, command that will be executed:
+        #/usr/sbin/unbound-anchor -a /var/lib/unbound/root.anchor -c /etc/unbound/icannbundle.pem
+
+Job can be scheduled in directories:
+  ■ etc/cron.hourly
+  ■ /etc/cron.daily
+  ■ /etc/cron.weekly
+  ■ /etc/cron.monthly
+
+  Scripts must be executable:
+    #chmod +x SCRIPT
+
+  There is no time part in scripts in this folders.
+
+Use of anacron:
+  #/etc/anacrontab
+
+List cron jobs for current user:
+  #crontab-l
+
+Allow which user can access cron:
+  "/etc/cron.allow"
+
+Deny user from accessing cron:
+  "/etc/cron.deny"
+
+Schedule execution only once:
+  #atd TIME(14:00)
+    To close use CTRL + D
+  #atq
+    List queue.
+  #atrm
+    #Remove from queue.
+  #atd -l 3.0
+    Make sure that no batch job is started when system load is higher than 3.0.

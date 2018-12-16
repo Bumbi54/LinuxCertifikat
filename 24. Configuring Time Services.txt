@@ -1,0 +1,50 @@
+Add NTP server in:
+  "/etc/chrony.conf"
+
+Switch one NTP:
+  #imedatectl set-ntp 1
+
+Manage localtime:
+  #date
+  #date +%d-%m-%y
+    Current system day of month, month and year.
+  #date -s 16:03
+    Set current time.
+
+Manage hardware time:
+  #hwclock
+  #hwclock -c
+    Show difference between hardware and system time.
+  #hwclock --systohc
+    Synchronizes current system time to the hardware clock.
+  #hwclock --hctosys
+    Synchronizes current hardware time to the system clock.
+
+Manage all time:
+  #timedatectl
+  status - Show current time settings
+  set-time - TIME Set the current time
+  set-timezone - ZONE Set the current time zone
+  list-timezone - Show a list of all time zones
+  set-local-rtc [0|1] - Control whether RTC (the Real Time Clock—this normally refers to the hardware clock) is in local time
+  set-ntp [0|1] - Control whether NTP is enabled
+
+  #timedatectl show
+  #timedatectl set-timezone Europe/Amsterdam
+
+  #yum -y install chrony
+    #systemctl start chronyd; systemctl enable chronyd
+    #systemctl status -l chronyd
+
+Convert epoch time to date:
+  #date --date '@1420987251'
+
+Set time zones:
+  1. timedatectl
+  2. tzselect
+    It is a prompt.
+  3. In directory "/usr/share/zoneinfo"
+      Create symbolic link:
+        #ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+  4. In GUI - "Date & Time Settings"
+    #system-config-date

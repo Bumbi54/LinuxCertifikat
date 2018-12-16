@@ -2,9 +2,11 @@ Alias:
   List aliases:
     #alias
   Add alias:
-    #ll=’ls -l --color=auto’
+    #alias ll=’ls -l --color=auto’
   They are executed before anything else.
   If "\" is put before command, alias won't be used.
+  Remove alias:
+    #unalias gs
 
 To find information about commands:
     #type command
@@ -27,6 +29,7 @@ History:
   Wipe history on disk:
     #history -c
     #history -w
+  Remove file "~/.bash_history"
 
 Vim replace all:
   :%s/old/new/g
@@ -57,3 +60,9 @@ Search man pages:
 
 Update man pages(as root):
   #mandb
+
+Add ssh message before login:
+  Create file and put a message:
+    #vi /etc/ssh/sshd-banner
+  In "/etc/ssh/sshd-config" add a line:
+    "Banner PATH_TO_FILE"

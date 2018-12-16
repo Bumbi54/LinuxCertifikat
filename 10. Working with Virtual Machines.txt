@@ -1,0 +1,13 @@
+Check architecture of system:
+  #arch
+
+Check virtualization:
+  Enable in BIOS.
+  Check in "cat /proc/cpuinfo".
+    "vmx" or svm""
+
+  Install KVM:
+    #yum groupinstall “Virtualization Host"
+
+Show virtual networking configuration:
+  #brctl show

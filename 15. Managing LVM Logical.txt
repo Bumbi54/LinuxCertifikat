@@ -1,0 +1,70 @@
+Create LVM Volumes:
+  Three steps:
+    1. Create Physical Volume - pv
+    2. Create Volume group (assign physical volume to it) -vg
+    3. Create logical volume  - lv
+
+Create Physical Volumes:
+  #fdisk /dev/vdb
+  Type "n" to create new partition and press "p" to make it primary partition.
+  Give space.
+  Change partition type, press "t"
+  Use partition type "8e" - "Linux LVM".
+  Press "w" to write changes.
+  Flag this partition as physical volume:
+    #pvcreate /dev/vdb1
+  To verify type:
+    #pvs
+    #pvdisplay
+
+Create Volume group:
+  #vgcreate vgdata /dev/vdb1
+
+List volume groups:
+  #vgs
+
+Add complete disk to volume group:
+  #vgcreate vgdata /dev/sdc
+
+Set physical extent size:
+  #vgcreate -s
+
+Information about volume group:
+  #vgdisplay
+
+Create logical volumes and file system:
+  Size:
+    Absolute size "-L 5G".
+    Relative size "-l 50%FREE"
+  Create:
+    #lvcreate -n lvvol1 -L 100M vgdata
+  List:
+    #lvs
+
+  Device name:
+    "/dev/VOLUME_GROUP/VOLUME_NAME"
+    "/dev/mapper/VOLUME_GROUP-VOLUME_NAME"
+
+Create file system on logical volume:
+  #mkfs.xfs /dev/vgdata/lvdata
+
+Add line in "/etc/fstab":
+  #/dev/vgdata/lvdata /files xfs defaults 1 2
+  #mount -a
+
+Resize LVM Logical Volumes:
+  #vgextend
+    Add storage to volume group.
+  Remove storage from volume group:
+    #vgreduce
+  #lvextend
+    Extend logical volume and file system.
+  #lvresize -L +1G -r /dev/vgdata/lvdata
+  #lvresize -r -l 75%VG /dev/vgdata/lvdata
+    This resizes the logical volume so that it will take 75% of the total disk space in the volume group.
+  #lvresize -r -l +75%VG /dev/vgdata/lvdata
+    This tries to add 75% of the total size of the volume group to the logical volume. (Notice the difference with the previous command.)
+  #lvresize -r -l +75%FREE /dev/vgdata/lvdata
+    This adds 75% of all free disk space to the logical volume.
+  #lvresize -r -l 75%FREE /dev/vgdata/lvdata
+  This resizes the logical volume to a total size that equals 75% of the amount of free disk space. (Notice the difference with the previous command.)

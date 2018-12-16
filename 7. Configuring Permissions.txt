@@ -1,0 +1,120 @@
+Permissions:
+  Three entities:
+    File owner
+    Group owner
+    Others
+
+Commands:
+  #newgrp - used to set the effective primary group, which will effect default group ownership on new files until the current shell session is ended.
+  #chgrp - used to set the group owner of an existing file
+
+Change user ownership:
+  #chown who what
+  Option "-R" set ownership of directory and all other recursively in it
+    #chown -R linda /home/linda
+
+Change group ownership:
+  #chown (use "." or ":" before name of group)
+  #chown lisa.sales myfile - Sets user lisa as user owner and group sales as group owner of myfile
+
+  #chgrp account /home/account
+    Option "-R" set ownership of directory and all other recursively in it.
+
+Check groups from user:
+  #groups USER
+
+Change effective primary group:
+  #newgrp GROUP_NAME
+  Changed till exit
+
+Set group password:
+  #gpasswd
+
+The three basic permissions:
+  Read - Open a file - List contents of directory
+  Write - Change contents of a file  - Create and delete files and modify permissions on files
+  Execute - Run a program file - Change to the directory
+
+Apply permissions:
+  Command "chmod".
+    Can set for user, group or others.
+    Absolute mode numbers:
+      Read (4), Write (2), (1) - they are added
+    Relative mode indicators:
+      ■ First, you specify for whom you want to change permissions. To do this, you can choose between user ( u ), group ( g ), and others ( o ).
+      ■ Then, you use an operator to add or remove permissions from the current mode, or set them in an absolute way.
+      ■ At the end, you use r , w , and x to specify what permissions you want to set.
+
+      #chmod +x somefile
+        Adds the execute permission for all users.
+      #chmod g+w,o-r somefile
+        Adds the write permission to the group and remove read for others
+
+    To set the execute permission to directories only, and not to files:
+      #chmod -R o+rX /data
+
+Three advanced permissions:
+  Set user ID (SUID) permission (in "ll" that is "s")
+  Set group ID (SGID) permission (in "ll" that is "s")
+  Sticky bit (in "ll" that is "t"):
+    When you apply the sticky bit, a user can delete files only if either of the following is true:
+      ■ The user is owner of the file.
+      ■ The user is owner of the directory where the file exists.
+
+  Use "chmod" to set advanced permissions:
+    SUID has numeric value 4 or "u+s", SGID has numeric value 2 or "g+s", and sticky bit has numerical value 1 or "+t".
+
+    Use four digits.
+    Use relative mode:
+      ■ For SUID, use chmod u+s  - User executes file with permissions of file owner.        -No meaning.
+      ■ For SGID, use chmod g+s  - User executes file with permissions of group owner.       -Files created in directory get the same group owner.
+      ■ For sticky bit, use chmod +t - No meaning                                            -Prevents users from deleting files from other users.
+      followed by the name of the file or the directory that you want to set the permissions on.
+
+      Example:
+        #chmod g+s,o+t /data/sales
+          Set the group ID bit as well as sticky bit on the shared group directory
+
+ACL:
+  Might lose ACL settings when copying or moving files
+  "tar" is not supported - use "star" instead of "tar"
+  Backup:
+    Take backup:
+      #getfacl -R /directory > file.acls
+    Restore backup:
+      #setfacl --restore=file.acl
+  In "/etc/fstab" add "acl mount"!!
+
+  Set ACL with "setfacl".
+    #setfacl -m g:sales:rx /dir
+      Option "-m" means that current ACL needs to be modified.
+    Option "-R" appy to all sub-files and directories.
+
+  See ACL with "getfacl".
+
+  Default ACL can be set (applied only to new files and directories):
+    #setfacl -m d:g:sales:rx /data
+      Option "-d" to set default.
+    Set permissions for "other" for all the new files:
+      #setfacl -m d:o::- /data .
+        No permission!
+
+    Set regular permissions first and then ACL!!!
+
+Alternative for default permissions:
+  #umask
+    Shell setting.
+  Maximum permission is "666" for files and "777" for directories. Substract to remove permissions.
+
+  Set for all users:
+    Create script in "/etc/profile.d" and specify "umask".
+  For individual user:
+    Change in file ".profile".
+
+Attributes:
+  Set an attribute:
+    #chattr +s somefile
+  Remove an attribute:
+    #chattr -s somefile
+  List all applied attributes:
+    #lsattr

@@ -1,0 +1,130 @@
+List partitions:
+  #cat /proc/partitions
+
+Manage MBR partitions:
+  #fdisk
+
+  Manage MBR partitions:
+    #gdisk
+
+  Disk device types:
+    "/dev/sda"
+    "/dev/vda"
+      In KVM.
+    First disk starts with "a" second with "b".
+      "/dev/sdb"
+
+Create MBR Partitions (only 4 primary):
+  #fdisk /dev/vda
+  Check how much disk we have: "p"
+  Add new partition: "n"
+    Use "p" to create primary partition.
+  Accept default fist sector.
+  Specify the last sector that the partition will end on:
+    By default last sector.
+    Enter number of last sector to use.
+    Enter ""+number" to create partition with number sectors.
+    Enter "+number(K,M,G)" to specify size (in KiB, MiB...):
+      #+100M
+    Define partition type:
+      Default "Linux partition type".
+      To use other type "t".
+    Press "p" for overview.
+    Type "w" to write modification to disk.
+    Back in console:
+      #partprobe /dev/vda
+        Writes changes to kernel partition table.
+
+  Take backup:
+    #dd if=/dev/vda of=/root/diskfile bs=1M count=1
+    #cp /etc/fstab /root/fstab
+
+  File system can't be created on extended partition.
+  Create extended partition:
+    Type "e" when asked for partition type.
+    If it is forth partition it should fill rest of sector (space).
+  Create logical partition within extended one:
+    Press "n" in fdisk.
+
+Create GPT Partitions:
+  #gdisk /dev/vda
+  Add new partition: "n"
+    Chose partition number.
+  Accept default fist sector.
+  Enter number of last sector to use.
+  Enter ""+number" to create partition with number sectors.
+  Enter "+number(K,M,G)" to specify size (in KiB, MiB...):
+    #+100M
+  Define partition type:
+    Default "Linux partition type".
+    Press "l" to show list of types.
+  Press "p" for overview.
+  Type "w" to write modification to disk.
+  Back in console:
+    #partprobe /dev/vda
+      Writes changes to kernel partition table.
+
+Creating file system:
+  Format a partition to specific type (file system):
+    #mkfs -t xfs /dev/vda5
+
+Manage "Ext":
+  List properties:
+    #tune2fs -l /dev/sdb1
+  Set mount options:
+    #tune2fs -o
+    #tune2fs -o acl,user_xattr
+      Switch on access control lists and user extended attributes.
+  To switch off feature use "^".
+  Switch on file system feature:
+    #tune2fs -O
+  Set label:
+    #tune2fs -L
+
+Manage "XFS":
+  Set label:
+    #xfs_admin -L mylabel
+    #e2label
+
+Format a partition as swap space:
+  #mkswap /dev/vda6
+
+Check free swap space:
+  #free -m
+
+Activate swap space:
+  #swapon /dev/vda6
+
+Use file as swap:
+  Create file:
+    #dd if=/dev/zero of=/swapfile bs=1M count=100
+  #mkswap /swapfile
+  #swapon /swapfile
+
+Mount file system:
+  #mount /dev/vda5 /mnt
+  To umount:
+    $umount dev/vda5 or umount /mnt
+  #mount UUID="42f419c4-633f-4ed7-b161-519a4dadd3da" /mnt
+  #mount LABEL=mylabel /mnt
+
+Get file systems UUIDs:
+  #blkid
+    Also shows labels.
+
+Mount file systems automatically:
+  In a file "/etc/fstab" add entry.
+  Columns:
+    Device, Mount Point, File System(type), Mount Options, Dump Support, Automatic Check
+  Mount options:
+    auto/ noauto - The file system will [not] be mounted automatically.
+    acl - Adds support for file system access control lists (see Chapter 7 ,“Configuring Permissions”).
+    user_xattr - Add support for user extended attributes (see Chapter 7 ).
+    ro - mounts the file system in read-only mode.
+    atime / noatime - Disables or enables access time modifications.
+    noexec / exec - Denies or allows execution of program files from the file system.
+    netdev - Use this to mount a network file system. This tells fstab to
+
+  Test mount:
+    #mount -a
+    #df -h - after reset

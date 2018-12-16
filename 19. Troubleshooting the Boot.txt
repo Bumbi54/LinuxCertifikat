@@ -1,0 +1,52 @@
+Accessing the Boot Prompt:
+  In boot prompt press "e" for editing commands.
+  In boor prompt press "c" to enter full GRUB command prompt.
+
+"e":
+  Scroll to section "linux16/vmlinuz".
+    Line that tell GRUB how to start a kernel.
+      Remove "rhgb" and "quiet".
+  Press "CTRL + X" to start kernel with this parameters.
+    This parameters are used only once.
+  Some of the parameters:
+    #systemd.unit=emergency.target
+      Load minimal amount of units.
+    #systemd.unit=rescue.target
+      Little more units then minimal.
+
+Using rescue disk:
+  Enable access to disk:
+    #chroot /mnt/sysimage
+
+  Reinstall GRUB:
+    #chroot /mnt/sysimage
+    #grub2-install /dev/vda
+      "/dev/vda" is device where GRUB will be reinstalled.
+
+Re-Creating the Initramfs Using a Rescue Disk:
+  #dracut
+
+Initramfs problem:
+  Root file system is not getting mounted on the root directory, nor will you see any systemd units getting started.
+  Fix:
+    #dracut --force
+    "/etc/dracut.conf"
+
+Recovering from File System Issues:
+  Error message "Give root password for maintenance".
+  Check error messages:
+    #journalctl -xb
+  #mount -o remount,rw /
+
+Restart root password (from minimal mode):
+  "e" on boot.
+  Enter "rd.break" as boot argument and press "CTRL + X".
+  #mount -o remount,rw /sysroot
+    To get read/write access to the system.
+  #chroot /sysroot
+    Make the contents of the /sysimage directory your new root directory.
+  #passwd
+    Set password.
+  #load_policy -i
+  #chcon -t shadow_t /etc/shadow
+  Reboot.

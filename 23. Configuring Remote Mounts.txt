@@ -1,0 +1,97 @@
+Syntax:
+  #mount labipa.example.com:/data /mnt
+    Key part is "servername:/sharename",
+
+To enable Kerberos:
+  Add "sec=krb5[ip]" option to "mount".
+  Service "nfs-secure" must be started.
+
+Discover shares on NFS:
+  Use "root" mount.
+  #netstat -an | grep your.nfs.server.ip:port
+  #showmount -e nfsserver
+
+Mounting an NFS Share:
+  #yum install -y nfs-utils to
+  Log in as root to the labipa machine. Use ssh root@192.168.122.200
+    #systemctl stop firewalld
+  On local server: #showmount -e nfsserver
+  On labipa : #systemctl start firewalld
+  Root mount:
+    #mount 192.168.122.200:/ /mnt
+      All NFS shares.
+  Verify mount:
+    #mount | grep 122 to
+    #ls /mnt
+
+Mounting SMB File Systems (Samba):
+  Packets needed: "cifs-utils" and "samba-client"
+    #yum install -y cifs-utils samba-client
+  Add samba-client service to firewall:
+    #firewall-cmd --add-service samba-client --permanent; firewall-cmd --reload
+  Discover SMB shares:
+    #smbclient -L 192.168.122.201
+      Press "Enter" when asked for password.
+      Option "-Uusername" to user valid Samba user account.
+    Alternative:
+      #net share -l
+
+  Mount SMB Share:
+    #mount -t cifs -o user=guest //192.168.122.200/data /mnt
+      Option "-t cifs" is optional it says that we are mounting SMB share.
+      Option "-o user=guest" is to authenticate without password.
+        Only read permission.
+      Option "-o username=someone":
+        To authenticate as valid user.
+
+  From GUI:
+    "Places > Browse Network"
+    Add a server:
+      "Network > Connect to Server"
+        Format "smb://ipa.example.com/data" "smb://servername/sharename"
+
+Mount automatically:
+  NFS using "fstab":
+    Add line "server1:/share /nfs/mount/point nfs,_netdev,x-systemd.automount, sync 0 0"
+  SMB using "fstab":
+    Add line: ""
+      User credential:
+        "username="" and "password=""
+        It is better to use credential file:
+          Put it in the home directory of the root user, set the owners to root:root, and set the permission mode 600.
+            Example of file:
+              "username=linda
+              password=secret
+              domain=mydomain"
+          To use file from command line use option "-o credentials= filename":
+            #mount -t cifs -o credentials=/root/creds //server1/data /mnt/data
+          To use file from "/etc/fstab":
+            #//server1/data /mnt/data cifs _netdev,, x-systemd.automount,credentials=/root/creds 0 0
+
+Using Automount:
+  Mounted on demand and not by default.
+  Package "autofs".
+    #yum install -y autofs
+  Create file in "etc/auto.master.d" it must end with "autofs".
+    Indirect mapping:
+      Add line "/shares /etc/auto.demo"
+      In file "/etc/auto.demo":
+        Add line "data -rw,sync labipa:/data".
+          It will be mounted in "/shares/data"
+    Direct mapping:
+      Add line "/- /etc/auto.direct"
+      In file "/etc/auto.direct":
+        Add a line "/mnt -rw,sync labipa:/home".
+      For both run:
+        #systemctl enable autofs; systemctl start autofs
+
+  Configure indirect mount, where home directories are mounted on /home/guests:
+    In "/etc/auto.master.d/home.autofs":
+      Add a line "/home/guests /etc/auto.homes".
+      In "/etc/auto.homes":
+        Add a line "* -rw,sync labipa:/home/ldap/&"
+      #systemctl restart autofs
+
+  Same procedure for SBM:
+    If you want to use a credentials file, make sure to include the absolute path to that file (such as /root/filename.cre) in the mount options.
+    The name of the share that should be mount should start with a colon (:). All devices that are mounted in automount and have a name that starts with a / should be prepended by a colon.

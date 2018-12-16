@@ -1,0 +1,44 @@
+Man pages about "nmcli":
+  #man nmcli-examples
+
+Hostname:
+  In a file "/etc/hostname".
+
+Check network addresses:
+  #ip addr
+
+Check routing:
+  #ip route
+
+
+Check network links:
+  #ip link
+  Set state:
+    #ip link set ens160 up
+
+List all existing connections:
+  #ip -s link
+
+Check ports:
+  #netstat
+  #ss
+    #ss -lt
+      All listening TCP ports.
+  Option "-t" for TCP and "-u" for UDP.
+
+Set ip address from console:
+  #ip addr add IP_ADDRESS/24 dev DEVICE_NAME
+
+Network Manager:
+  #systemctl status NetworkManager
+
+Set new hostname:
+  #hostnamectl set-hostname HOST_NAME
+  Show current hostname:
+    #hostnamectl status
+
+Order of DNS resolution is configured in "/etc/nsswitch.conf".
+
+Set DNS when dhcp is configured:
+  In "/etc/sysconfig/network-scripts/ifcfg-*" set "PEERDNS=no".
+  #nmcli con mod <con-name> ipv4.ignore-auto-dns yes

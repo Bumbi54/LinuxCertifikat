@@ -1,0 +1,46 @@
+Old not recommended:
+  #iptables
+  Always!:
+    #systemctl mask iptables
+
+Use "firewalld":
+  #firewall-cmd
+  #firewall-config (graphical interface)
+    To use it update is needed:
+      #yum update -y
+
+Some useful examples:
+  #firewall-cmd --get-default-zone
+    See current default zone.
+  #firewall-cmd --get-zones
+   See available zones.
+  #firewall-cmd --list-all
+  #firewall-cmd--list-services
+  #firewall-cmd --add-service=vnc-server
+    Add a service.
+  #firewall-cmd --add-service vnc-server --permanent
+    Add a permanent service.
+
+Make a permanent cahnge:
+  #firewall-cmd --addport=2022/tcp --permanent
+
+
+
+Options:
+--get-zones Lists all available zones
+--get-default-zone Shows the zone currently set as default zone
+--set-default-zone=<ZONE> Changes the default zone
+--get-services Shows all available services
+--list-services Shows services currently in use
+--add-service=<service-name> [--zone=<ZONE>]
+Adds a service to the current default zone or the zone that is specified
+--remove-service=<service-name> Removes a service from the configuration
+--list-all [--zone=<ZONE>] Lists all configurations in a zone
+--add-port=<port/protocol> [--zone=<ZONE>] Adds a port and protocol
+--remove-port=<port/protocol> [--zone=<ZONE>] Removes a port from the configuration
+--add-interface=<INTERFACE> [--zone=<ZONE>] Adds an interface to the default zone or a specific zone that is specified
+--remove-interface=<INTERFACE> [--zone=<ZONE>] Removes an interface from a specific zone
+--add-source=<ipaddress/netmask> [--zone=<ZONE>] Adds a specific IP address
+--remove-source=<ipaddress/netmask> [--zone=<ZONE>] Removes an IP address from the configuration
+--permanent Writes configuration to disk and not to run-time
+--reload

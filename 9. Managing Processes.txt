@@ -1,0 +1,43 @@
+Move a job into background:
+  Type "&".
+
+Freeze a job:
+  CTRL + Z
+
+List process:
+  #ps aux
+  #ps ef
+    List command that started a process.
+
+Send End-Of-File:
+    #CTRL + D
+
+Continue job that was frozen with "CTRL + Z".
+
+Bring last process that was send to background up:
+  #fg
+
+Show jobs in shell:
+  #jobs
+
+Command top.
+
+Process start with priority 20.
+  Start process with different priority.
+    #nice
+    #nice -n 5 dd if=/dev/zero of=/dev/null &
+      Start a new process.
+  Change priority of running process:
+    #renice
+    #renice -n 10 -p 1234
+      Change niceness of process "1234".
+  Range -20 to 19.
+  Decrease in number increase priority.
+
+    Or use "r" in "top".
+
+To send signal to process:
+  #kill
+  ■ The signal SIGTERM (15) is used to ask a process to stop.
+  ■ The signal SIGKILL (9) is used to force a process to stop.
+  ■ The SIGHUP (1) signal is used to hang up a process. The effect is that the process will reread its configuration files, which makes this a useful signal to use after making modifications to a process configuration file.

@@ -1,0 +1,54 @@
+#systemctl -t help
+  Starting units.
+  List of units.
+
+Default unit files:
+  "/usr/lib/systemd/system"
+
+System specific unit files:
+  "/etc/systemd/system"
+
+Show all systemd option of command:
+  #systemctl show sshd
+
+Target unit - a group of units
+
+Configure service to start after reset:
+  #systemctl enable vsftpd
+
+List all services:
+  #systemctl --type=service
+
+List service dependencies:
+  #systemctl list-dependencies SERVICE
+
+Resolve conflict between services:
+  #systemctl mask SERVICE
+    #Makes a unit no longer a candidate for being started
+
+Isolate target:
+  #systemctl isolate rescue.target
+
+List all targets that can isolated:
+  #cd /usr/lib/systemd/system.
+  #grep Isolate*.target
+
+Set default target:
+  #systemctl set-default
+
+List current default targets:
+  #systemctl get-default
+
+Change configuration of GRUB 2:
+  In a file "/etc/default/grub"
+    Option "GRUB-CMDLINE_LINUX" contains boot arguments for kernel.
+    Remove "rhgb" and "quiet".
+      Those options hid output while loading.
+    Option "GRUB_TIMEOUT":
+      Defines the amount of time your server waits for you to access the GRUB 2 boot menu before it continues booting automatically.
+  Write changes:
+    #grub2-mkconfig > /boot/grub2/grub.cfg
+    #grub2-mkconfig -o /boot/grub2/grub.cfg
+
+List kernel boot arguments:
+  #man 7 bootparam

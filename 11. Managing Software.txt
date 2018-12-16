@@ -1,0 +1,55 @@
+Add new repository:
+  Create file that end in ".repo"
+
+  Use "man yum.conf" for help (in examples).
+
+For file bases repository:
+  "baseurl:///" "file:///".
+
+The GPG keys that were used for package signing are installed to the /etc/pki/rpm-gpg directory by default.
+
+Create your own repository:
+  #createrepo /repo
+    "/repo" is custom directory that contains rpm-s.
+
+List current repositories:
+  #yum repolist
+
+Search repository for packet:
+  #yum search PACKET_NAME
+
+Search for files in packets:
+  #yum provides */FILE_NAME
+  #yum whatprovides */FILE_NAME
+
+List packets:
+  #yum list
+  #yum list all
+  #yum list installed
+
+Install group:
+ #yum group install "GROUP_NAME"
+ #yum groups list
+  List available groups.
+
+Remove stored metadata:
+  #yum clean all
+
+Yum history:
+  #yum History
+  Undo:
+    #yum history undo NUMBER/ID
+
+List installed software:
+  #rpm -qa
+
+RPM:
+  #rpm -qi PACKET_NAME
+    Packet description.
+  #rpm -qf /bin/ls
+    Find from where command comes from.
+  To query packet use option "-p".
+
+Download packet from yum repository:
+  #yumdownloader
+    From "yum-utils"
