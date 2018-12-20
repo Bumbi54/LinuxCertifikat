@@ -54,7 +54,7 @@ Mount automatically:
   NFS using "fstab":
     Add line "server1:/share /nfs/mount/point nfs,_netdev,x-systemd.automount, sync 0 0"
   SMB using "fstab":
-    Add line: ""
+    Add line: "//server1/data /mnt/data cifs _netdev,x-systemd.automount,credentials=/root/creds 0 0"
       User credential:
         "username="" and "password=""
         It is better to use credential file:
@@ -72,7 +72,7 @@ Using Automount:
   Mounted on demand and not by default.
   Package "autofs".
     #yum install -y autofs
-  Create file in "etc/auto.master.d" it must end with "autofs".
+  Create file in "/etc/auto.master.d" it must end with "autofs".
     Indirect mapping:
       Add line "/shares /etc/auto.demo"
       In file "/etc/auto.demo":

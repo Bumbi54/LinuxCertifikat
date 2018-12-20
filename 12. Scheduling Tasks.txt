@@ -12,12 +12,14 @@ Put files in "/etc/cron.d" directory:
   Example of file:
     #10 3 1 * * unbound /usr/sbin/unbound-anchor -a /var/lib/unbound/root. anchor -c /etc/unbound/icannbundle.pem
       First part "10 3 1 * *":
-        On 3:10 every first in moth.
+        On 3:10 every first in month.
       Second part user:
         "unbound"
       Third part, command that will be executed:
         #/usr/sbin/unbound-anchor -a /var/lib/unbound/root.anchor -c /etc/unbound/icannbundle.pem
 
+        0 */2 2 12 5 Every 2 hours on the hour on December second and every Friday in December
+        
 Job can be scheduled in directories:
   ■ etc/cron.hourly
   ■ /etc/cron.daily

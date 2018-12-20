@@ -55,7 +55,7 @@ Apply permissions:
 
 Three advanced permissions:
   Set user ID (SUID) permission (in "ll" that is "s")
-  Set group ID (SGID) permission (in "ll" that is "s")
+  Set group ID (SGID) permission (in "ll" that is "d")
   Sticky bit (in "ll" that is "t"):
     When you apply the sticky bit, a user can delete files only if either of the following is true:
       ■ The user is owner of the file.
@@ -88,7 +88,7 @@ ACL:
   Set ACL with "setfacl".
     #setfacl -m g:sales:rx /dir
       Option "-m" means that current ACL needs to be modified.
-    Option "-R" appy to all sub-files and directories.
+    Option "-R" apply to all sub-files and directories.
 
   See ACL with "getfacl".
 

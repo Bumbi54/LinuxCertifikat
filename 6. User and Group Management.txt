@@ -107,3 +107,9 @@ Logging In Through an External Authentication Service (LDAP):
 Host file:
   Set new name resolution:
     192.168.122.200 ipa.example.com
+
+Make user shell no-interactive:
+  #useradd -s /sbin/nologin USER_NAME
+
+Find all files whose owner is harry and copy them:
+  #find / -user harry -exec cp -rfp {} /opt/dir/ \;

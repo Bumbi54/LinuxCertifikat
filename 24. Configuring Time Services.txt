@@ -2,7 +2,7 @@ Add NTP server in:
   "/etc/chrony.conf"
 
 Switch one NTP:
-  #imedatectl set-ntp 1
+  #timedatectl set-ntp 1
 
 Manage localtime:
   #date

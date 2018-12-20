@@ -1,3 +1,8 @@
+https://serverfault.com/questions/515688/how-to-find-a-not-formatted-hard-disk-on-linux
+Check partitions types:
+  #lsblk -f
+  #blkid
+
 List partitions:
   #cat /proc/partitions
 
@@ -94,6 +99,8 @@ Check free swap space:
 
 Activate swap space:
   #swapon /dev/vda6
+  #swapon -a
+    Applica changes.
 
 Use file as swap:
   Create file:

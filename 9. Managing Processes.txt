@@ -14,8 +14,11 @@ Send End-Of-File:
 
 Continue job that was frozen with "CTRL + Z".
 
+List jobs in background:
+  #jobs
+
 Bring last process that was send to background up:
-  #fg
+  #fghi
 
 Show jobs in shell:
   #jobs

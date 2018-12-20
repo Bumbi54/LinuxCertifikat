@@ -30,8 +30,8 @@ Isolate target:
   #systemctl isolate rescue.target
 
 List all targets that can isolated:
-  #cd /usr/lib/systemd/system.
-  #grep Isolate*.target
+  #cd /usr/lib/systemd/system
+  #grep Isolate *.target
 
 Set default target:
   #systemctl set-default
@@ -43,7 +43,7 @@ Change configuration of GRUB 2:
   In a file "/etc/default/grub"
     Option "GRUB-CMDLINE_LINUX" contains boot arguments for kernel.
     Remove "rhgb" and "quiet".
-      Those options hid output while loading.
+      Those options hide output while loading.
     Option "GRUB_TIMEOUT":
       Defines the amount of time your server waits for you to access the GRUB 2 boot menu before it continues booting automatically.
   Write changes:

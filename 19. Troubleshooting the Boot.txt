@@ -1,6 +1,6 @@
 Accessing the Boot Prompt:
   In boot prompt press "e" for editing commands.
-  In boor prompt press "c" to enter full GRUB command prompt.
+  In boot prompt press "c" to enter full GRUB command prompt.
 
 "e":
   Scroll to section "linux16/vmlinuz".

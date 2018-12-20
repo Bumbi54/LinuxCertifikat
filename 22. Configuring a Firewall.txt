@@ -21,7 +21,7 @@ Some useful examples:
   #firewall-cmd --add-service vnc-server --permanent
     Add a permanent service.
 
-Make a permanent cahnge:
+Make a permanent change:
   #firewall-cmd --addport=2022/tcp --permanent
 
 

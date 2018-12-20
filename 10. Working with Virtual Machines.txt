@@ -11,3 +11,45 @@ Check virtualization:
 
 Show virtual networking configuration:
   #brctl show
+
+Service must be running:
+  #systemctl status -l libvirtd
+
+Make server KVM host:
+  Load "kvm" modules:
+    #modprobe -r kvm
+  Check is "kvm" modules are loaded:
+    #lsmod | grep kvm
+      There should be two "kvm" and "kvm_intel"
+  Check status of service:
+      #systemctl status libvirtd
+
+  Start Virtual Machine Manager:
+    #virt-manager &
+      This opens graphical interrace.
+
+Check virtual machine configuration:
+  #cat vmthin1.xml
+
+Change VM configuration:
+  #virsh edit <vmname>
+
+Access KVM Virtual Machines:
+  ■ SSH into the VM
+  ■ Through Virtual Machine Manager - easiest
+  ■ Through GNOME Boxes
+  ■ Using virt-viewer
+  ■ Optionally, through third-party utilities.
+
+Accessing Virtual Machines from a Text-Only Console:
+  On VM type:
+    #grubby --update-kernel=ALL --args=“console=ttyS0”
+  Restart VM:
+  On host:
+    #virsh console server1.example.com
+      "CTRL + l" to exit
+    #virsh list
+New VM will have their disk stored in: "/var/lib/libvirt/images".
+
+Use "top" to see how much resources VMs use:
+  "qemu-kvm"

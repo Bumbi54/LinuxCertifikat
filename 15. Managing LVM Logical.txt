@@ -68,3 +68,6 @@ Resize LVM Logical Volumes:
     This adds 75% of all free disk space to the logical volume.
   #lvresize -r -l 75%FREE /dev/vgdata/lvdata
   This resizes the logical volume to a total size that equals 75% of the amount of free disk space. (Notice the difference with the previous command.)
+
+List physical disks in volume groups:
+  #pvscan

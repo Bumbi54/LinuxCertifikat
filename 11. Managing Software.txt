@@ -36,7 +36,7 @@ Remove stored metadata:
   #yum clean all
 
 Yum history:
-  #yum History
+  #yum history
   Undo:
     #yum history undo NUMBER/ID
 

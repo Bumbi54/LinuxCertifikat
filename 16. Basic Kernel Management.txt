@@ -1,4 +1,4 @@
-Kernel threads have "[]" in lsit of "ps aux".
+Kernel threads have "[]" in list of "ps aux".
 
 Check kernel events/messages:
   #dmesg
